@@ -6,7 +6,7 @@ author: duongau
 ms.service: azure-expressroute
 ms.custom: devx-track-azurepowershell
 ms.topic: how-to
-ms.date: 12/28/2023
+ms.date: 10/14/2024
 ms.author: duau
 ---
 # Configure route filters for Microsoft peering using PowerShell
@@ -96,7 +96,8 @@ Run the following command to attach the route filter to the ExpressRoute circuit
 
 ```azurepowershell-interactive
 $ckt = Get-AzExpressRouteCircuit -Name "ExpressRouteARMCircuit" -ResourceGroupName "MyResourceGroup"
-$ckt.Peerings[0].RouteFilter = $routefilter 
+$index = [array]::IndexOf(@($ckt.Peerings.PeeringType), "MicrosoftPeering")
+$ckt.Peerings[$index].RouteFilter = $routefilter 
 Set-AzExpressRouteCircuit -ExpressRouteCircuit $ckt
 ```
 
